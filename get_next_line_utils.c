@@ -3,11 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atomasi <marvin@42lausanne.ch>             +#+  +:+       +#+        */
+/*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:10:04 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/16 14:10:06 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:25:28 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+char *ft_strjoin(char *s1, char *s2)
+{
+	int i;
+}
