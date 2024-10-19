@@ -23,5 +23,6 @@
 char	*get_next_line(int fd);
 int		ft_strlen(const char *str);
 char	*ft_strjoin(char *s1, char *s2);
+int		real_len(char *str);
 
 #endif

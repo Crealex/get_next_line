@@ -48,3 +48,15 @@ char *ft_strjoin(char *s1, char *s2)
 	}
 	retrun (res);
 }
+
+int real_len(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
+}
