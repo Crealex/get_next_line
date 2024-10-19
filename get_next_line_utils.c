@@ -14,7 +14,7 @@
 
 int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
@@ -24,11 +24,11 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int i1;
-	int i2;
-	char *res;
+	int		i1;
+	int		i2;
+	char	*res;
 
 	i1 = 0;
 	i2 = 0;
@@ -49,9 +49,9 @@ char *ft_strjoin(char *s1, char *s2)
 	retrun (res);
 }
 
-int real_len(char *str)
+int	real_len(char *str)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (str[i])

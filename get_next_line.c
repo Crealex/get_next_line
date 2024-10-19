@@ -14,7 +14,7 @@
 
 static void	save_stash(char *buffer, char *stash, int ibuff)
 {
-	int istash;
+	int	istash;
 
 	istash = 0;
 	if (BUFFER_SIZE == real_len(buffer))
@@ -29,10 +29,10 @@ static void	save_stash(char *buffer, char *stash, int ibuff)
 	}
 }
 
-static int		check_buffer(char *buffer, char **stash, char *line, int iline, int fd)
+static int	check_buffer(char *buffer, char *stash, char *line, int iline)
 {
-	int ibuff;
-	int max;
+	int	ibuff;
+	int	max;
 
 	ibuff = 0;
 	max = ft_strlen(line) + ft_strlen(buffer) + 1;
@@ -53,10 +53,10 @@ static int		check_buffer(char *buffer, char **stash, char *line, int iline, int 
 	return (1);
 }
 
-static int	add_stash(char *stash, char *line, int fd)
+static int	add_stash(char *stash, char *line)
 {
-	int iline;
-	int istash;
+	int	iline;
+	int	istash;
 
 	iline = 0;
 	istash = 0;
@@ -71,11 +71,11 @@ static int	add_stash(char *stash, char *line, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char *stash[1024];
-	char buffer[BUFFER_SIZE + 1];
-	char *line;
-	int isread;
-	int iline;
+	static char	*stash[1024];
+	char		buffer[BUFFER_SIZE + 1];
+	char		*line;
+	int			isread;
+	int			iline;
 
 	iline = 0;
 	isread = 1;
@@ -84,14 +84,14 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	if (stash[fd])
-		iline = add_stash(stash, line, fd);
+		iline = add_stash(stash, line);
 	while (isread)
 	{
 		isread = read(fd, buffer, BUFFER_SIZE);
 		if (isread < 0 || !buffer)
 			return (NULL);
 		buffer[BUFFER_SIZE + 1] = '\0';
-		if (check_buffer(buffer, stash, line, iline, fd) == 0)
+		if (check_buffer(buffer, stash[fd], line, iline) == 0)
 			isread = 0;
 	}
 	return (line);
