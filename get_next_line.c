@@ -3,44 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alexandre <alexandre@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:09:41 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/20 17:26:14 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/20 19:45:08 by alexandre        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void	save_stash(char *buffer, char *stash, int ibuff)
+static char	*save_stash(char *buffer, char *stash, int ibuff)
 {
 	int	istash;
 
 	istash = 0;
+	printf("stash dans debut de save_stash : %s\n", stash);
 	if (BUFFER_SIZE == real_len(buffer))
 		stash = malloc(sizeof(char) * (BUFFER_SIZE - ft_strlen(buffer)));
 	if (stash == NULL)
-		return ;
+		return (NULL);
+	ibuff++;
 	while (buffer[ibuff])
 	{
 		stash[istash] = buffer[ibuff];
 		ibuff++;
 		istash++;
 	}
+	printf("stash dans fin de save_stash : %s\n", stash);
+	return (stash);
 }
 
 static char	*check_buffer(char *buffer, char *stash, char *line)
 {
 	int	ibuff;
-	int	max;
 
 	ibuff = 0;
-	max = ft_strlen(line) + ft_strlen(buffer) + 1;
 	while (buffer[ibuff])
 	{
 		if (buffer[ibuff] == '\n')
 		{
-			save_stash(buffer, stash, ibuff);
+			stash = save_stash(buffer, stash, ibuff);
+			printf("stash dans check_buffer : %s\n", stash);
 			line = ft_strjoin(line, buffer);
 			return (line);
 		}
@@ -57,6 +60,7 @@ static char	*add_stash(char *stash, char *line)
 
 	iline = 0;
 	istash = 0;
+	printf("stash add_stash : %s\n", stash);
 	while (stash[istash])
 	{
 		line[iline] = stash[istash];
@@ -72,16 +76,16 @@ char	*get_next_line(int fd)
 	char		buffer[BUFFER_SIZE + 1];
 	char		*line;
 	int			isread;
-	int			iline;
 
-	iline = 0;
 	isread = 1;
-	stash[fd] = NULL;
 	line = NULL;
 	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	if (stash[fd])
+	{
+		printf("stash dans principal : %s\n", stash[fd]);
 		line = add_stash(stash[fd], line);
+	}
 	while (isread)
 	{
 		isread = read(fd, buffer, BUFFER_SIZE);
@@ -89,8 +93,11 @@ char	*get_next_line(int fd)
 			return (NULL);
 		buffer[isread] = '\0';
 		line = check_buffer(buffer, stash[fd], line);
+		printf("stash a la fin de la fonction principal : %s\n", stash[fd]);
 		if (isread < BUFFER_SIZE || ft_strlen(buffer) < BUFFER_SIZE)
-			isread = 0;
+			{
+				isread = 0;
+			}
 	}
 	return (line);
 }
