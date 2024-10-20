@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 14:09:54 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/20 14:08:29 by atomasi          ###   ########.fr       */
+/*   Created: 2024/10/20 13:50:53 by atomasi           #+#    #+#             */
+/*   Updated: 2024/10/20 17:23:34 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+int main()
+{
+	printf("testttttttttt\n");
+	int fd;
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h> //test et debug
-
-char	*get_next_line(int fd);
-int		ft_strlen(char *str);
-char	*ft_strjoin(char *s1, char *s2);
-int		real_len(char *str);
-
-#endif
+	fd = open("file1.txt", O_RDONLY);
+	if (0 > fd)
+		return (1);
+	printf("la premiere ligne de mon fichier est : %s\n", get_next_line(fd));
+	printf("la deuxieme ligne de mon fichier est : %s\n", get_next_line(fd));
+	close(fd);
+	return (0);
+}
