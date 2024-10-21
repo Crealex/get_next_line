@@ -85,7 +85,6 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			isread;
 
-	printf("\033[0;32mSTASH debut de fonction: %s\n", stash[fd]);
 	isread = 1;
 	line = NULL;
 	if (BUFFER_SIZE <= 0)
@@ -102,7 +101,7 @@ char	*get_next_line(int fd)
 		isread = read(fd, buffer, BUFFER_SIZE);
 		if (isread < 0 || !*buffer)
 			return (NULL);
-		buffer[isread] = '\0';
+		buffer[isread + 1] = '\0';
 		line = check_buffer(buffer, line);
 		if (isread < BUFFER_SIZE || ft_strlen(buffer) < BUFFER_SIZE)
 		{
@@ -110,6 +109,5 @@ char	*get_next_line(int fd)
 			stash[fd] = save_stash(buffer, stash[fd], ft_strlen(buffer));
 		}
 	}
-	printf("\033[0;32mSTASH fin de fonction: %s\n", stash[fd]);
 	return (line);
 }
