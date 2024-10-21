@@ -37,13 +37,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (res == NULL)
 		return (NULL);
-	if (ft_strlen(s1) > 0)
+	while (ft_strlen(s1) > 0 && s1[i1])
 	{
-		while (s1[i1])
-		{
-			res[i1] = s1[i1];
-			i1++;
-		}
+		res[i1] = s1[i1];
+		i1++;
 	}
 	while (s2[i2] && s2[i2] != '\n')
 	{

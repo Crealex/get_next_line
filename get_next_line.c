@@ -14,9 +14,9 @@
 
 static char	*delete_part_of_stash(char *stash)
 {
-	int i;
-	int j;
-	char *temp;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = 0;
 	j = 0;
@@ -27,10 +27,10 @@ static char	*delete_part_of_stash(char *stash)
 		i++;
 	}
 	i = 0;
-	while(temp[j] != '\n')
+	while (temp[j] != '\n')
 		j++;
 	j++;
-	while(temp[j] && stash[i])
+	while (temp[j] && stash[i])
 	{
 		stash[i] = temp[j];
 		i++;
