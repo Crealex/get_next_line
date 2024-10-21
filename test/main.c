@@ -6,7 +6,7 @@
 /*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:50:53 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/20 17:23:34 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/21 16:56:37 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,31 @@
 
 int main()
 {
-	printf("testttttttttt\n");
-	int fd;
+	int fd1;
+	int fd2;
+	int i;
 
-	fd = open("file1.txt", O_RDONLY);
-	if (0 > fd)
+	fd1 = open("file1.txt", O_RDONLY);
+	fd2 = open("file2.txt", O_RDONLY);
+	i = 1;
+	if (fd1 < 0)
 		return (1);
-	printf("la premiere ligne de mon fichier est : %s\n", get_next_line(fd));
-	printf("la deuxieme ligne de mon fichier est : %s\n", get_next_line(fd));
-	close(fd);
+	printf("\033[0;31m----------FILES1----------\n");
+	while (i < 14)
+	{
+		printf("\033[0;31mligne %d : \033[0m%s\n", i, get_next_line(fd1));
+		i++;
+	}
+	if (fd2 < 0)
+		return(1);
+	i = 1;
+	printf("\033[0;33m----------FILE2----------\n");
+	while(i < 23)
+	{
+		printf("\033[0;33mlinge %d : \033[0m%s\n", i, get_next_line(fd2));
+		i++;
+	}
+	close(fd1);
+	close(fd2);
 	return (0);
 }
