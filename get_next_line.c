@@ -6,7 +6,7 @@
 /*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:09:41 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/21 17:43:57 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/22 12:07:44 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ static char	*save_stash(char *buffer, char *stash, int ibuff)
 	int	istash;
 
 	istash = 0;
-	stash = NULL;
-	if (BUFFER_SIZE == real_len(buffer))
-		stash = malloc(sizeof(char) * (BUFFER_SIZE - ft_strlen(buffer)));
+	stash = malloc(sizeof(char) * (BUFFER_SIZE - ft_strlen(buffer)));
 	if (stash == NULL)
 		return (NULL);
 	ibuff++;
@@ -99,9 +97,9 @@ char	*get_next_line(int fd)
 	while (isread)
 	{
 		isread = read(fd, buffer, BUFFER_SIZE);
-		if (isread < 0 || !*buffer)
+		if (isread <= 0 || !*buffer)
 			return (NULL);
-		buffer[isread + 1] = '\0';
+		buffer[isread] = '\0';
 		line = check_buffer(buffer, line);
 		if (isread < BUFFER_SIZE || ft_strlen(buffer) < BUFFER_SIZE)
 		{
