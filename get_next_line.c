@@ -6,7 +6,7 @@
 /*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:09:41 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/22 12:07:44 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/22 15:28:17 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static char	*delete_part_of_stash(char *stash)
 	i = 0;
 	j = 0;
 	temp = malloc(sizeof(char) * (real_len(stash) + 1));
+	if (temp == NULL)
+	{
+		free(temp);
+		return (NULL);
+	}
 	while (stash[i])
 	{
 		temp[i] = stash[i];
@@ -37,6 +42,7 @@ static char	*delete_part_of_stash(char *stash)
 		j++;
 	}
 	stash[i] = '\0';
+	free(temp);
 	return (stash);
 }
 
@@ -45,9 +51,13 @@ static char	*save_stash(char *buffer, char *stash, int ibuff)
 	int	istash;
 
 	istash = 0;
+	free(stash);
 	stash = malloc(sizeof(char) * (BUFFER_SIZE - ft_strlen(buffer)));
 	if (stash == NULL)
+	{
+		free(stash);
 		return (NULL);
+	}
 	ibuff++;
 	while (buffer[ibuff])
 	{
@@ -91,6 +101,7 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, stash[fd]);
 	if (line && line[ft_strlen(line)] == '\n')
 	{
+		free(stash[fd]);
 		stash[fd] = delete_part_of_stash(stash[fd]);
 		return (line);
 	}
@@ -104,6 +115,7 @@ char	*get_next_line(int fd)
 		if (isread < BUFFER_SIZE || ft_strlen(buffer) < BUFFER_SIZE)
 		{
 			isread = 0;
+			free(stash[fd]);
 			stash[fd] = save_stash(buffer, stash[fd], ft_strlen(buffer));
 		}
 	}

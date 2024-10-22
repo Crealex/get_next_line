@@ -6,7 +6,7 @@
 /*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:10:04 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/22 10:10:06 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:48:19 by atomasi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i2++;
 	}
 	res[i1] = s2[i2];
+	free(s1);
 	return (res);
 }
 
