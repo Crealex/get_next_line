@@ -1,6 +1,6 @@
 Ce est la premiere ligne de mon deuxieme fichier de test
 IL est important car il me permet de tester les bonus
-Aussi j'ai moins d'inspiration que pour mon fichier
+Aussi j'ai moins d'inspiration que pour mon fichier1
 Et
 je suis un peu fatigue de faire des fichiers tests bidon
 mais bon...
