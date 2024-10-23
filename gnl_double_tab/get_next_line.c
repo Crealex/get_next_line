@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atomasi <atomasi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: alexandre <alexandre@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:09:41 by atomasi           #+#    #+#             */
-/*   Updated: 2024/10/23 17:38:42 by atomasi          ###   ########.fr       */
+/*   Updated: 2024/10/23 21:27:48 by alexandre        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,18 @@ static char	*delete_part_of_stash(char *stash)
 	int		j;
 	char	*temp;
 
-	i = 0;
+	i = ft_strlen(stash);
 	j = 0;
-	temp = malloc(sizeof(char) * (real_len(stash) + 1));
-	if (temp == NULL)
-		return (NULL);
+	temp = malloc(sizeof(char) * (real_len(stash) - i + 1));
 	while (stash[i])
 	{
-		temp[i] = stash[i];
-		i++;
-	}
-	i = 0;
-	while (temp[j] && temp[j] != '\n')
-		j++;
-	j++;
-	while (temp[j] && stash[i])
-	{
-		stash[i] = temp[j];
+		temp[j] = stash[i];
 		i++;
 		j++;
 	}
-	stash[i] = '\0';
-	if (temp)
-		free(temp);
-	temp = NULL;
-	return (stash);
+	temp[j] = '\0';
+	free(stash);
+	return (temp);
 }
 
 static char	*save_stash(char *buffer, char *stash, int ibuff)
@@ -76,11 +63,15 @@ static char	*check_buffer(char *buffer, char *line)
 		if (buffer[ibuff] == '\n')
 		{
 			line = ft_strjoin(line, buffer);
+			if (line == NULL)
+				return (NULL);
 			return (line);
 		}
 		ibuff++;
 	}
 	line = ft_strjoin(line, buffer);
+	if (line == NULL)
+		return (NULL);
 	return (line);
 }
 
@@ -95,14 +86,12 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > 1024 || fd < 0 || fd > 1024)
 		return (NULL);
-	if (stash[fd])
+	if (BUFFER_SIZE > 1 || stash[fd])
 	{
 		line = ft_strjoin(line, stash[fd]);
 	}
 	if (line && line[ft_strlen(line)] == '\n')
 	{
-		if (stash[fd])
-			free(stash[fd]);
 		stash[fd] = delete_part_of_stash(stash[fd]);
 		return (line);
 	}
@@ -111,10 +100,10 @@ char	*get_next_line(int fd)
 		isread = read(fd, buffer, BUFFER_SIZE);
 		if (isread <= 0 || !*buffer)
 		{
-			free(stash[fd]);
-			if (line && isread == 0) // plus ou moins les dernieres ligne que j'ai rajouter
+			if (stash[fd])
+				free(stash[fd]);
+			if (line && isread == 0)
 				return (line);
-			free(line);
 			return (NULL);
 		}
 		buffer[isread] = '\0';
@@ -122,7 +111,8 @@ char	*get_next_line(int fd)
 		if (isread < BUFFER_SIZE || ft_strlen(buffer) < BUFFER_SIZE)
 		{
 			isread = 0;
-			stash[fd] = save_stash(buffer, stash[fd], ft_strlen(buffer));
+			if (BUFFER_SIZE > 1 || ft_strlen(buffer) > 1)
+				stash[fd] = save_stash(buffer, stash[fd], ft_strlen(buffer));
 		}
 	}
 	return (line);
